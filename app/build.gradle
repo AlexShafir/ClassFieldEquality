@@ -39,4 +39,6 @@ dependencies {
     compileOnly project(":annotations")
     kapt project(":processor")
     lintChecks project(":lint")
+
+    testImplementation 'junit:junit:4.13.1'
 }
