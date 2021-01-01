@@ -36,7 +36,7 @@ android {
 
 
 dependencies {
-    compileOnly project(":annotations")
+    implementation project(":annotations")
     kapt project(":processor")
     lintChecks project(":lint")
 
