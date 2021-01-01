@@ -7,8 +7,7 @@ import com.android.tools.lint.checks.infrastructure.TestLintTask.lint
 import org.junit.Test
 
 // Lint Test does not interpret annotated files correctly: https://issuetracker.google.com/issues/119884022
-// Lint Test does not detect testImplementation: https://issuetracker.google.com/issues/176280843
-// TODO: Mock annotations
+// Lint Test does not resolve annotations in test code: https://issuetracker.google.com/issues/176280843
 class TestDetector {
 
     val annotationSource: TestFile = KotlinTestFile.create(
