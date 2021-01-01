@@ -67,9 +67,9 @@ data class Class2(
     val param2:String
 )
 
-val t:Class2 = Class2("a", "b")
+val target:Class2 = Class2("a", "b")
 fun test() {
-    t.mapToOrigin() // Generated after you run Build
+    val origin:Class1 = t.mapToOrigin() // Generated after you run Build
 }
 
 ```
