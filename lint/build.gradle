@@ -1,0 +1,20 @@
+
+jar {
+    manifest {
+        attributes("Lint-Registry-v2": "com.alexshafir.classfieldequality.lint.MyIssueRegistry")
+    }
+}
+
+def lint_version = "27.1.1"
+
+dependencies {
+
+    // Lint
+    compileOnly "com.android.tools.lint:lint-api:$lint_version"
+    compileOnly "com.android.tools.lint:lint-checks:$lint_version"
+
+    // Lint testing
+    testImplementation "com.android.tools.lint:lint:$lint_version"
+    testImplementation "com.android.tools.lint:lint-tests:$lint_version"
+    testImplementation 'junit:junit:4.13.1'
+}

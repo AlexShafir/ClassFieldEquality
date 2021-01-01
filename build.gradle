@@ -1,0 +1,108 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    ext.kotlin_version = "1.4.21"
+    ext.latest_version = "1.0.0"
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:4.1.1"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.5"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file("local.properties").newDataInputStream())
+
+
+
+subprojects{
+
+    if(it.name == "app") return
+
+    apply plugin: "com.jfrog.bintray"
+    apply plugin: "maven-publish"
+    apply plugin: "kotlin" // Currently all projects are Kotlin-only libraries
+
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+
+    java {
+        withSourcesJar()
+        withJavadocJar()
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                groupId "com.alexshafir.classfieldequality"
+                artifactId project.name
+                version latest_version
+                from components.java
+
+                pom {
+                    name = "ClassFieldEquality"
+                    description = "Helps control field equality between Kotlin classes"
+                    url = "https://github.com/AlexShafir/ClassFieldEquality"
+
+                    // Set your license
+                    licenses {
+                        license {
+                            name = "MIT"
+                            url = "https://github.com/AlexShafir/ClassFieldEquality/LICENSE"
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = "https://github.com/AlexShafir"
+                            name = "Alexander Shafir"
+                            email = "https://github.com/AlexShafir"
+                        }
+                    }
+                    scm {
+                        connection = "scm:git:https://github.com/AlexShafir/ClassFieldEquality.git"
+                        developerConnection = "scm:git:https://github.com/AlexShafir/ClassFieldEquality.git"
+                        url = "https://github.com/AlexShafir/ClassFieldEquality"
+
+                    }
+                }
+            }
+        }
+    }
+
+    bintray {
+        user = properties.getProperty("bintray.user")
+        key = properties.getProperty("bintray.apikey")
+        publications = ["mavenJava"]
+
+        dryRun = false // Whether to run this as dry-run, without deploying
+        publish = true // Whether version should be auto published after an upload
+        override = true // Whether to override version artifacts already published
+        pkg {
+            repo = "ClassFieldEquality"
+            name = "com.alexshafir.classfieldequality.${project.name}"
+
+            version {
+                name = latest_version
+            }
+
+        }
+    }
+
+}
+
+
