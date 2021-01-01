@@ -36,6 +36,8 @@ You need to run Build first. Currently aborts silently if error is detected.
 
 ## Adding to your project
 
+In your `build.gradle`:
+
 ```gradle
 repositories {
   jcenter()
